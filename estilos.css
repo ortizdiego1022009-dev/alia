@@ -1060,3 +1060,48 @@ nav a:hover::after, nav a:focus::after { width: 100%;}
     font-size: 0.9em;
   }
 }
+
+/* Estilos para Google Forms */
+.google-forms-container {
+  margin: 20px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background: #2a213d;
+  border: 1px solid #332772;
+}
+
+.google-forms-container iframe {
+  border: none;
+  background: transparent;
+}
+
+/* Ocultar formularios HTML originales */
+.registro-form,
+.contact-form {
+  display: none;
+}
+
+/* Estilos para mensajes de Google Forms */
+.google-forms-container::before {
+  content: "📝 Formulario de Google Forms";
+  display: block;
+  background: linear-gradient(90deg, #7c4dff 35%, #b388ff 100%);
+  color: white;
+  padding: 12px 20px;
+  font-weight: 600;
+  text-align: center;
+  font-size: 1.1em;
+}
+
+/* Responsive para Google Forms */
+@media (max-width: 600px) {
+  .google-forms-container iframe {
+    height: 350px;
+  }
+  
+  .google-forms-container::before {
+    font-size: 1em;
+    padding: 10px 15px;
+  }
+}

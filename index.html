@@ -329,19 +329,27 @@
     <div class="container">
       <h2>Regístrate para acceso anticipado</h2>
       <p>¿Quieres ser de los primeros en probar Alia IA? Déjanos tu correo y te avisaremos cuando la app esté disponible. Los usuarios registrados obtendrán beneficios exclusivos.</p>
-      <form
-        class="registro-form"
-        id="registroForm"
-        action="https://formspree.io/f/mzzvkveq"
-        method="POST"
-      >
-        <input type="text" name="nombre" placeholder="Tu nombre (opcional)">
-        <input type="email" name="email" placeholder="Tu correo electrónico" required>
-        <button type="submit" class="btn-registrar pulse">
-          <i class="fa-solid fa-user-plus"></i> Registrarse
-        </button>
-      </form>
-      <div id="mensajeRegistro" class="mensaje-registro" style="display: none;"></div>
+        <form id="registroForm" class="registro-form">
+          <input type="text" name="nombre" placeholder="Tu nombre" required>
+          <input type="email" name="email" placeholder="Tu email" required>
+          <button type="submit" class="btn-registrar">
+            <i class="fa-solid fa-rocket"></i> Registrarme para acceso anticipado
+          </button>
+        </form>
+        <div id="mensajeRegistro" class="mensaje-registro" style="display: none;"></div>
+        
+                 <!-- Google Forms Embed -->
+         <div class="google-forms-container">
+           <iframe 
+             src="https://docs.google.com/forms/d/e/1FAIpQLSfHt25SzLX3gCiTCmWA/viewform?embedded=true" 
+             width="100%" 
+             height="400" 
+             frameborder="0" 
+             marginheight="0" 
+             marginwidth="0">
+             Cargando formulario...
+           </iframe>
+         </div>
       <p class="aviso">*No enviaremos spam. Recibirás novedades, acceso prioritario al lanzamiento y beneficios exclusivos.</p>
       <div class="beneficios-registro">
         <div class="beneficio">
@@ -360,20 +368,14 @@
     </div>
   </section>
 
-  <section id="contacto" class="contacto fade-in">
-    <div class="container">
-      <h2>Contacto y soporte</h2>
-      <form class="contact-form" autocomplete="off" id="contactForm" action="https://formspree.io/f/mzzvkveq" method="POST">
-        <input type="text" name="nombre" placeholder="Tu nombre" required id="nombreContacto">
-        <input type="email" name="email" placeholder="Tu correo electrónico" required id="emailContacto">
-        <textarea name="mensaje" placeholder="¿Tienes dudas, sugerencias o quieres colaborar con el proyecto? Escríbenos." required id="mensajeContacto"></textarea>
-        <button type="submit" class="btn-primary" id="btnContacto">Enviar mensaje</button>
-      </form>
-      <div id="mensajeContacto" class="mensaje-contacto" style="display: none;"></div>
-      <p class="contacto-mail">O escríbenos directamente a tu email configurado en Formspree</p>
-      <p class="contacto-nota">*Los correos llegan al email que configuraste en tu cuenta de Formspree</p>
-    </div>
-  </section>
+     <section id="contacto" class="contacto fade-in">
+     <div class="container">
+       <h2>Contacto y soporte</h2>
+       <p>¿Tienes dudas, sugerencias o quieres colaborar con el proyecto? Nuestro equipo está aquí para ayudarte.</p>
+       <p class="contacto-mail">Escríbenos directamente a soporte@alia-ia.com</p>
+       <p class="contacto-nota">*También puedes usar el soporte técnico integrado en la app de Alia IA</p>
+     </div>
+   </section>
 
   <footer class="footer">
     <div class="container footer-flex">
@@ -410,8 +412,8 @@
       <p class="footer-copy">&copy; 2025 Alia IA. Todos los derechos reservados. Desarrollado con ❤️ para revolucionar la IA móvil.</p>
     </div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
-  <script src="script.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+   <script src="script.js"></script>
 </body>
 </html>
