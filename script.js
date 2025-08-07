@@ -102,82 +102,164 @@ if (menuToggle && mainNav) {
       menuToggle.classList.remove('open');
     });
   });
-  menuToggle.addEventListener('keydown', e => {
-    if (e.key === "Enter" || e.key === " ") {
-      mainNav.classList.toggle('open');
-      menuToggle.classList.toggle('open');
+}
+
+// FAQ Accordion
+document.querySelectorAll('.faq-question').forEach(question => {
+  question.addEventListener('click', () => {
+    const faqItem = question.parentElement;
+    const isActive = faqItem.classList.contains('active');
+    
+    // Cerrar todos los items
+    document.querySelectorAll('.faq-item').forEach(item => {
+      item.classList.remove('active');
+    });
+    
+    // Abrir el item clickeado si no estaba activo
+    if (!isActive) {
+      faqItem.classList.add('active');
     }
+  });
+});
+
+// Smooth scrolling para enlaces internos
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
+
+// Manejo del formulario de registro
+const registroForm = document.getElementById('registroForm');
+if (registroForm) {
+  registroForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const email = formData.get('email');
+    const nombre = formData.get('nombre');
+    
+    // Validación básica
+    if (!email || !email.includes('@')) {
+      showMessage('Por favor, ingresa un email válido.', 'error');
+      return;
+    }
+    
+    // Simular envío (reemplazar con tu endpoint real)
+    const submitBtn = this.querySelector('.btn-registrar');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+    submitBtn.disabled = true;
+    
+    setTimeout(() => {
+      showMessage('¡Gracias por registrarte! Te avisaremos cuando Alia IA esté disponible.', 'success');
+      this.reset();
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+      
+      // Confeti para celebrar
+      if (typeof confetti !== 'undefined') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      }
+    }, 2000);
   });
 }
 
-// Formspree: mostrar mensaje de éxito personalizado
-const registroForm = document.getElementById('registroForm');
-registroForm?.addEventListener('submit', function(e) {
-  e.preventDefault();
-  var form = this;
-  fetch(form.action, {
-    method: 'POST',
-    body: new FormData(form),
-    headers: { 'Accept': 'application/json' }
-  }).then(response => {
-    if (response.ok) {
-      document.getElementById('mensajeRegistro').style.display = 'block';
-      document.getElementById('mensajeRegistro').textContent = '¡Registro enviado! Te avisaremos cuando la app esté disponible.';
-      form.reset();
-    } else {
-      document.getElementById('mensajeRegistro').style.display = 'block';
-      document.getElementById('mensajeRegistro').textContent = 'Error al enviar. Intenta nuevamente.';
-    }
-  });
-});
-
-// Hover animado en logo
-document.querySelector('.logo-hover')?.addEventListener('mouseenter', function() {
-  this.style.transform = 'scale(1.12) rotate(8deg)';
-});
-document.querySelector('.logo-hover')?.addEventListener('mouseleave', function() {
-  this.style.transform = '';
-});
-
-// Scroll suave
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-});
-
-// Contact Form Submission (assuming a similar Formspree setup or just client-side alert)
+// Manejo del formulario de contacto
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
   contactForm.addEventListener('submit', function(e) {
     e.preventDefault();
-    // You would typically send this data to a backend or Formspree
-    alert('¡Mensaje enviado! Nos pondremos en contacto contigo pronto.');
-    contactForm.reset();
+    
+    const formData = new FormData(this);
+    const nombre = formData.get('nombre');
+    const email = formData.get('email');
+    const mensaje = formData.get('mensaje');
+    
+    // Validación básica
+    if (!nombre || !email || !mensaje) {
+      showMessage('Por favor, completa todos los campos.', 'error');
+      return;
+    }
+    
+    if (!email.includes('@')) {
+      showMessage('Por favor, ingresa un email válido.', 'error');
+      return;
+    }
+    
+    // Simular envío (reemplazar con tu endpoint real)
+    const submitBtn = this.querySelector('#btnContacto');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
+    submitBtn.disabled = true;
+    
+    setTimeout(() => {
+      showMessage('¡Mensaje enviado! Te responderemos pronto.', 'success');
+      this.reset();
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+    }, 2000);
   });
 }
 
-// FAQ Accordion
-const faqQuestions = document.querySelectorAll('.faq-question');
+// Función para mostrar mensajes
+function showMessage(message, type) {
+  const mensajeElement = document.getElementById('mensajeRegistro') || document.getElementById('mensajeContacto');
+  if (mensajeElement) {
+    mensajeElement.textContent = message;
+    mensajeElement.className = `mensaje-registro mensaje-${type}`;
+    mensajeElement.style.display = 'block';
+    
+    setTimeout(() => {
+      mensajeElement.style.display = 'none';
+    }, 5000);
+  }
+}
 
-faqQuestions.forEach(question => {
-    question.addEventListener('click', () => {
-        const faqItem = question.closest('.faq-item');
-        const faqAnswer = faqItem.querySelector('.faq-answer');
-        const icon = question.querySelector('i');
+// Auto-play del carrusel
+let carruselInterval;
+function startCarrusel() {
+  carruselInterval = setInterval(() => {
+    const nextBtn = document.querySelector('.carrusel-next');
+    if (nextBtn) {
+      nextBtn.click();
+    }
+  }, 4000);
+}
 
-        faqItem.classList.toggle('active');
+function stopCarrusel() {
+  if (carruselInterval) {
+    clearInterval(carruselInterval);
+  }
+}
 
-        if (faqItem.classList.contains('active')) {
-            faqAnswer.style.maxHeight = faqAnswer.scrollHeight + "px";
-            icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-        } else {
-            faqAnswer.style.maxHeight = "0";
-            icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-        }
-    });
+// Iniciar carrusel automático
+startCarrusel();
+
+// Pausar carrusel al hacer hover
+const carruselContainer = document.querySelector('.explora-mockup-carrusel');
+if (carruselContainer) {
+  carruselContainer.addEventListener('mouseenter', stopCarrusel);
+  carruselContainer.addEventListener('mouseleave', startCarrusel);
+}
+
+// Animación del logo al cargar
+window.addEventListener('load', () => {
+  const logo = document.querySelector('.animated-logo');
+  if (logo) {
+    setTimeout(() => {
+      logo.classList.add('logo-in');
+    }, 500);
+  }
 });
