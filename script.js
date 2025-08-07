@@ -152,27 +152,44 @@ if (registroForm) {
       return;
     }
     
-    // Simular envío (reemplazar con tu endpoint real)
+    // Enviar con Formspree
     const submitBtn = this.querySelector('.btn-registrar');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
     submitBtn.disabled = true;
     
-    setTimeout(() => {
-      showMessage('¡Gracias por registrarte! Te avisaremos cuando Alia IA esté disponible.', 'success');
-      this.reset();
+    fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        showMessage('¡Gracias por registrarte! Te avisaremos cuando Alia IA esté disponible.', 'success');
+        this.reset();
+        
+        // Confeti para celebrar
+        if (typeof confetti !== 'undefined') {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+        }
+      } else {
+        throw new Error('Error en el envío');
+      }
+    })
+    .catch(error => {
+      showMessage('Error al enviar. Intenta nuevamente.', 'error');
+      console.error('Error:', error);
+    })
+    .finally(() => {
       submitBtn.innerHTML = originalText;
       submitBtn.disabled = false;
-      
-      // Confeti para celebrar
-      if (typeof confetti !== 'undefined') {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
-      }
-    }, 2000);
+    });
   });
 }
 
@@ -198,18 +215,35 @@ if (contactForm) {
       return;
     }
     
-    // Simular envío (reemplazar con tu endpoint real)
+    // Enviar con Formspree
     const submitBtn = this.querySelector('#btnContacto');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Enviando...';
     submitBtn.disabled = true;
     
-    setTimeout(() => {
-      showMessage('¡Mensaje enviado! Te responderemos pronto.', 'success');
-      this.reset();
+    fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        showMessage('¡Mensaje enviado! Te responderemos pronto.', 'success');
+        this.reset();
+      } else {
+        throw new Error('Error en el envío');
+      }
+    })
+    .catch(error => {
+      showMessage('Error al enviar. Intenta nuevamente.', 'error');
+      console.error('Error:', error);
+    })
+    .finally(() => {
       submitBtn.innerHTML = originalText;
       submitBtn.disabled = false;
-    }, 2000);
+    });
   });
 }
 
